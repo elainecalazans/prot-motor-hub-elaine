@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-ssr
+# vendor: BSystem pré-buildado (usado pelo deploy)
+!vendor/bhub-design-system/dist
+!vendor/bhub-design-system/dist/**
+.DS_Store
+*.local
+.vscode
+.idea
+.env
+.env.local
+
+# Impeccable: snapshots de critique são artefatos de trabalho locais
+.impeccable/critique/

@@ -1,0 +1,52 @@
+{
+  "name": "@bhubai/bhub-design-system",
+  "version": "1.0.1-vendor.gpc-v3",
+  "description": "Vendored copy of @bhubai/bhub-design-system (feat/sidebar-v2) used by the GPC prototype. Do not edit by hand — replace the dist folder with a fresh build from the bsystem repo when updating.",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "style": "dist/styles.css",
+  "typesVersions": {
+    "*": {
+      "icons": ["./dist/icons.d.ts"]
+    }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./icons": {
+      "import": "./dist/esm/icons.js",
+      "require": "./dist/cjs/icons.js",
+      "types": "./dist/icons.d.ts"
+    },
+    "./dist/styles.css": "./dist/styles.css"
+  },
+  "files": ["dist", "package.json", "README.md"],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tailwindcss": ">=4"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.21.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.575.0",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.3",
+    "react-day-picker": "^9.13.2",
+    "react-resizable-panels": "^4.6.5",
+    "recharts": "^2.15.4",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "vaul": "^1.1.2"
+  }
+}

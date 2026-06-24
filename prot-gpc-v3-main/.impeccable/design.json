@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-15T19:38:45.000Z",
+  "title": "Design System: GPC — Gestor de Pendências do Cliente",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Quase-Preto de Comando", "canonical": "#171717" },
+      "foreground": { "role": "neutral", "displayName": "Tinta de Texto", "canonical": "#0a0a0a" },
+      "muted": { "role": "neutral", "displayName": "Cinza-Névoa", "canonical": "#f5f5f5" },
+      "muted-foreground": { "role": "neutral", "displayName": "Cinza-Legenda", "canonical": "#737373" },
+      "border": { "role": "neutral", "displayName": "Borda", "canonical": "#e5e5e5" },
+      "success": { "role": "tertiary", "displayName": "Verde-Concluído", "canonical": "#16a34a" },
+      "success-subtle": { "role": "tertiary", "displayName": "Verde-Suave", "canonical": "#f0fdf4" },
+      "success-text": { "role": "tertiary", "displayName": "Verde-Texto", "canonical": "#16a34a" },
+      "destructive": { "role": "tertiary", "displayName": "Vermelho-Vencido", "canonical": "#dc2626" },
+      "warning": { "role": "tertiary", "displayName": "Âmbar-Atenção", "canonical": "#f59e0b" },
+      "warning-subtle": { "role": "tertiary", "displayName": "Âmbar-Suave", "canonical": "#fffbeb" },
+      "warning-text": { "role": "tertiary", "displayName": "Âmbar-Texto", "canonical": "#d97706" },
+      "info": { "role": "tertiary", "displayName": "Azul-Informativo", "canonical": "#2563eb" },
+      "automacao": { "role": "secondary", "displayName": "Roxo de Automação", "canonical": "#9333ea" },
+      "calendario-selecao": { "role": "secondary", "displayName": "Azul de Calendário", "canonical": "#3b82f6" },
+      "sidebar": { "role": "neutral", "displayName": "Sidebar Preta", "canonical": "#0a0a0a" }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "Título de página, ex.: 'Tarefas'." },
+      "title": { "displayName": "Title", "purpose": "Títulos de bloco, ex.: 'Suas tarefas de fevereiro'." },
+      "body": { "displayName": "Body", "purpose": "Texto padrão de tarefas, descrições e copy." },
+      "label": { "displayName": "Label", "purpose": "Contadores, badges e metadados de data." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "transition-width", "value": "width 0.2s ease", "purpose": "Animação do preenchimento da barra de progresso." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Animações/transições neutralizadas sob prefers-reduced-motion: reduce." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal de uma tela. Quase-preto sólido do BSystem.",
+      "html": "<button class=\"ds-btn-primary\">Ver tarefa</button>",
+      "css": ".ds-btn-primary { background: #171717; color: #fafafa; font-family: Inter, sans-serif; font-size: 14px; font-weight: 500; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; transition: background 0.15s ease; } .ds-btn-primary:hover { background: #2a2a2a; } .ds-btn-primary:focus-visible { outline: 2px solid #d4d4d4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Status Chip — Concluída",
+      "kind": "chip",
+      "refersTo": "status-chip-done",
+      "description": "Chip de status 36×36. Estado comunicado por cor + ícone + aria-label, nunca só cor.",
+      "html": "<span class=\"ds-status-done\" role=\"img\" aria-label=\"Concluída\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg></span>",
+      "css": ".ds-status-done { display: inline-flex; height: 36px; width: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #f0fdf4; color: #16a34a; }"
+    },
+    {
+      "name": "Status Chip — Atrasada",
+      "kind": "chip",
+      "refersTo": "status-chip-late",
+      "description": "Prazo encerrado sem envio. Não é estado terminal: o cliente ainda age e leva pro verde.",
+      "html": "<span class=\"ds-status-late\" role=\"img\" aria-label=\"Atrasada\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/></svg></span>",
+      "css": ".ds-status-late { display: inline-flex; height: 36px; width: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #fff1f2; color: #e11d48; }"
+    },
+    {
+      "name": "Automação Badge — CTA",
+      "kind": "chip",
+      "refersTo": "badge-automacao-cta",
+      "description": "Pill tracejado roxo: tarefa elegível para automação ainda não configurada.",
+      "html": "<span class=\"ds-automacao-cta\"><svg viewBox=\"0 0 24 24\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/></svg>Automatizar</span>",
+      "css": ".ds-automacao-cta { display: inline-flex; align-items: center; gap: 4px; border: 1px dashed #9333ea; background: #faf5ff; color: #9333ea; border-radius: 8px; padding: 2px 8px; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; }"
+    },
+    {
+      "name": "Task Progress",
+      "kind": "custom",
+      "refersTo": "task-progress",
+      "description": "Barra 120×8px de tarefas concluídas, trilho neutro com borda e preenchimento verde.",
+      "html": "<div class=\"ds-progress\"><div class=\"ds-progress-fill\" style=\"width:33%\"></div></div>",
+      "css": ".ds-progress { position: relative; height: 8px; width: 120px; overflow: hidden; border-radius: 6px; border: 1px solid #e5e5e5; background: #f5f5f5; } .ds-progress-fill { position: absolute; inset: 0 auto 0 0; border-radius: 6px; background: #059669; transition: width 0.2s ease; }"
+    },
+    {
+      "name": "Status Chip — Entregável (atenção)",
+      "kind": "chip",
+      "refersTo": "status-chip-attention",
+      "description": "Chip de documento dos entregáveis (Folha/Fechamento) quando algo depende do cliente. Ícone fixo de documento; só a cor (âmbar) muda. Âmbar = pendência, nunca vermelho.",
+      "html": "<span class=\"ds-chip-entregavel-attention\" role=\"img\" aria-label=\"Fechamento aguardando sua ação\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"/><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"/></svg></span>",
+      "css": ".ds-chip-entregavel-attention { display: inline-flex; height: 36px; width: 36px; align-items: center; justify-content: center; border-radius: 8px; background: #fffbeb; color: #d97706; }"
+    },
+    {
+      "name": "Status Badge — Em processamento",
+      "kind": "chip",
+      "refersTo": "badge-status-progress",
+      "description": "Badge de status do entregável enquanto a BHub processa. Variante secondary (cinza) com spinner SEMPRE animado (animate-spin).",
+      "html": "<span class=\"ds-badge-progress\"><svg class=\"ds-spin\" viewBox=\"0 0 24 24\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12a9 9 0 1 1-6.219-8.56\"/></svg>Em processamento</span>",
+      "css": "@keyframes ds-spin { to { transform: rotate(360deg); } } .ds-badge-progress { display: inline-flex; align-items: center; gap: 4px; border-radius: 8px; padding: 2px 8px; background: #f5f5f5; color: #737373; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; } .ds-badge-progress .ds-spin { animation: ds-spin 1s linear infinite; }"
+    },
+    {
+      "name": "Status Badge — Aguardando aprovação",
+      "kind": "chip",
+      "refersTo": "badge-status-attention",
+      "description": "Badge de status do entregável que depende do cliente (folha a aprovar, fechamento com pendências). Variante warning (âmbar), nunca destructive.",
+      "html": "<span class=\"ds-badge-attention\"><svg viewBox=\"0 0 24 24\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/></svg>Aguardando aprovação</span>",
+      "css": ".ds-badge-attention { display: inline-flex; align-items: center; gap: 4px; border-radius: 8px; padding: 2px 8px; background: #fffbeb; color: #d97706; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Painel de Controle Calmo",
+    "overview": "O GPC é um painel mensal que pega algo que normalmente gera ansiedade — obrigações fiscais, prazos, multas — e devolve a sensação de 'está tudo sob controle'. A interface não grita, não enfeita e não impressiona: ela organiza. Cada tela responde, sem esforço, às três perguntas que importam: o que falta, até quando, e o que já está ok. A clareza de estado é o produto. Visualmente: sistema calmo, claro e flat sobre o BSystem, com cor usada com parcimônia, só onde carrega significado de estado. O único peso visual forte é a sidebar preta.",
+    "keyCharacteristics": [
+      "Flat por padrão: profundidade vem de borda + cor de superfície, não de sombra.",
+      "Cor é semântica, nunca decorativa: cada cor saturada significa um estado.",
+      "Neutros frios e alto contraste de texto; legibilidade acima de elegância.",
+      "Uma única tipografia (Inter) carregando toda a hierarquia por peso e tamanho.",
+      "BSystem é a fonte da verdade; o GPC compõe, não reinventa."
+    ],
+    "rules": [
+      { "name": "A Regra da Cor com Significado", "body": "Nenhuma cor saturada é decorativa. Verde, vermelho, âmbar, azul e roxo cada um carrega exatamente um significado de estado. Se um elemento não comunica estado, ele é neutro. Gradientes decorativos são proibidos.", "section": "colors" },
+      { "name": "A Regra do Estado Tríplice", "body": "Os três status de tarefa jamais se distinguem só por cor: sempre ícone + cor + rótulo acessível, simultâneos.", "section": "colors" },
+      { "name": "A Regra do Âmbar para Pendência", "body": "Pendência de entregável não é erro: o que depende de você (movimentações a resolver no Fechamento, aprovação da Folha) usa âmbar (warning), nunca vermelho (destructive). O vermelho fica reservado ao único caso punitivo — prazo de entrada estourado pelo cliente. Âmbar diz 'precisa de você'; vermelho diz 'passou do prazo'.", "section": "colors" },
+      { "name": "A Regra da Voz Única", "body": "Uma família (Inter), hierarquia por peso/tamanho. Nunca introduzir uma segunda fonte para 'dar personalidade'.", "section": "typography" },
+      { "name": "A Regra do Flat em Repouso", "body": "Superfícies são planas quando paradas. Elevação só aparece em resposta a estado: hover sutil ou overlay. Card com sombra ambiente em repouso é proibido — use borda.", "section": "elevation" },
+      { "name": "A Regra do Loading Vivo", "body": "Todo estado 'em processamento/andamento' gira: o spinner sempre leva animate-spin, tanto na badge do card quanto na do header. Spinner estático lê como ícone quebrado.", "section": "components" }
+    ],
+    "dos": [
+      "Do usar componentes e tokens do BSystem como primeira opção; só criar local quando o DS não cobrir.",
+      "Do usar tokens semânticos (text-foreground, bg-muted, border-border) em vez de cor crua.",
+      "Do reservar cor saturada para significado de estado.",
+      "Do comunicar status sempre por cor + ícone + rótulo.",
+      "Do usar âmbar (warning) para pendência de entregável que depende do cliente; vermelho (destructive) só para prazo de entrada estourado.",
+      "Do manter o ícone de documento como assinatura dos entregáveis (Guia/Folha/Fechamento), variando só a cor do chip pelo status.",
+      "Do animar todo spinner de 'processando/em andamento' com animate-spin (card e header), de forma consistente.",
+      "Do manter superfícies flat; profundidade por borda.",
+      "Do garantir contraste AA e foco de teclado visível.",
+      "Do escrever copy em PT-BR claro, em segunda pessoa."
+    ],
+    "donts": [
+      "Don't parecer um ERP contábil legado: tabelas cinzas intermináveis, densidade, jargão fiscal cru.",
+      "Don't cair no SaaS genérico de template: grids de cards idênticos, gradientes decorativos, hero-métrica.",
+      "Don't virar fintech corporativa fria: azul-marinho institucional dominante.",
+      "Don't parecer burocrático/governamental (e-CAC, gov.br): formulários intimidantes, linguagem oficial.",
+      "Don't hardcodar cor crua quando existe token (dívida em StatusIcon/AutomacaoBadge/TaskProgress).",
+      "Don't usar vermelho (destructive) para pendência de entregável (movimentação a resolver, folha a aprovar): isso soa punitivo. É âmbar.",
+      "Don't trocar o ícone do chip de entregável por estado (CircleAlert/CheckCircle/Loader2 no chip): o documento é fixo; quem muda é a cor.",
+      "Don't deixar spinner de status estático — sem animate-spin ele lê como ícone quebrado.",
+      "Don't usar border-left/right colorida >1px como faixa-acento.",
+      "Don't aplicar sombra ambiente em cards em repouso — use borda.",
+      "Don't introduzir uma segunda família tipográfica."
+    ]
+  }
+}

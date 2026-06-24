@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@bhubai/bhub-design-system/dist/styles.css";
+
+@source "../node_modules/@bhubai/bhub-design-system/dist";
+
+@theme {
+  --color-mizu-flow-bold: #3b82f6;
+
+  /*
+   * Rampa de automação (Open Finance). Roxo é o ÚNICO significado de "automação"
+   * no GPC — nunca decorativo. Tokenizado aqui (antes espalhado como hex cru em
+   * AutomacaoBadge / ContaAutomaticaBadge / AutomacaoOpenFinanceModal), mesmo
+   * padrão de mizu-flow-bold; migrar para o DS quando ele publicar.
+   *   automacao         sólido (badge "Automático"/"Automática", medalhão)
+   *   automacao-strong  hover/foco e texto sobre superfície subtle
+   *   automacao-subtle  superfície de fundo (header, nota, ícone tingido)
+   *   automacao-muted   superfície de hover do CTA tracejado
+   */
+  --color-automacao: #9333ea;
+  --color-automacao-strong: #7e22ce;
+  --color-automacao-subtle: #faf5ff;
+  --color-automacao-muted: #f3e8ff;
+}
+
+/* Sidebar v2: mapeia os tokens novos da família --sidebar-* para utilities
+   (text-sidebar-muted, bg-sidebar-success/info, from-sidebar-elevated, ...).
+   Deltas do feat/sidebar-v2 que a main do vendor ainda não tem. */
+@theme inline {
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-subtle: var(--sidebar-subtle);
+  --color-sidebar-elevated: var(--sidebar-elevated);
+  --color-sidebar-success: var(--sidebar-success);
+  --color-sidebar-info: var(--sidebar-info);
+}
+
+/*
+ * Sidebar preta do GPC. Na branch `feat/sidebar-v2` do DS os tokens de sidebar
+ * já eram escuros no tema claro (sidebar preta por design). Como o vendor agora
+ * é buildado da `main` — onde o `:root` usa sidebar clara e o escuro só vive no
+ * `.dark` (que o protótipo não ativa) — restauramos aqui os valores da sidebar v2.
+ * Override local até a sidebar v2 ser mergiada na `main` do DS.
+ */
+:root {
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #a3a3a3;
+  --sidebar-primary: #fafafa;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #262626;
+  --sidebar-ring: #d4d4d4;
+  --sidebar-muted: #737373;
+  --sidebar-subtle: #525252;
+  --sidebar-elevated: #171717;
+  --sidebar-success: #10b981;
+  --sidebar-info: #3f8dff;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * NÃO usar `scrollbar-gutter: stable` no html: o app-shell da sidebar v2 trava
+ * o wrapper em `h-svh overflow-hidden` e o scroll acontece DENTRO do inset — a
+ * janela nunca rola. Com o gutter reservado, sobrava uma faixa branca (fundo do
+ * body) à direita, fora do frame preto.
+ *
+ * Como não há scrollbar de janela, o `react-remove-scroll` (Radix: DropdownMenu,
+ * AlertDialog, etc.) não precisaria compensar nada ao abrir overlay; ainda assim
+ * mantemos a neutralização abaixo como salvaguarda contra qualquer padding-right
+ * injetado em runtime que deslocaria o conteúdo horizontalmente.
+ */
+html body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+/*
+ * TooltipContent do DS usa text-balance, que alarga o balão para equilibrar
+ * linhas. Nos ícones de status da Home, a largura deve abraçar o texto.
+ */
+[data-slot="tooltip-content"].gpc-status-tooltip {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 16rem;
+  text-wrap: wrap !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Sidebar v2 — deltas de CSS do feat/sidebar-v2 (não vêm na main)
+   ============================================================ */
+
+/* Scrollbar discreto da sidebar v2.
+ * Regras EXPLÍCITAS por data-slot — não usar `@utility scrollbar-thin { & }`:
+ * no pipeline do Vite/Lightning CSS o `&::-webkit-scrollbar` não era resolvido
+ * (saía como seletor literal `&...`, que não casa com nada) e o
+ * `color-mix(in oklab, currentColor ...)` saía malformado. Aqui usamos seletor
+ * direto + rgb() com alpha (sem color-mix), o que é robusto. */
+
+/* Nav da sidebar (fundo escuro): fino e rente — igual ao DS. */
+[data-slot="sidebar-content"]::-webkit-scrollbar { width: 6px; height: 6px; }
+[data-slot="sidebar-content"]::-webkit-scrollbar-track { background: transparent; }
+[data-slot="sidebar-content"]::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: rgb(255 255 255 / 0.16);
+}
+[data-slot="sidebar-content"]::-webkit-scrollbar-thumb:hover { background-color: rgb(255 255 255 / 0.28); }
+
+/* Conteúdo / inset (fundo claro): fino e com ESPAÇAMENTO da borda.
+ * A borda transparente + background-clip:padding-box recuam o thumb da beirada,
+ * dando o respiro até o canto arredondado do frame. */
+[data-slot="sidebar-inset"]::-webkit-scrollbar { width: 14px; height: 14px; }
+[data-slot="sidebar-inset"]::-webkit-scrollbar-track { background: transparent; }
+[data-slot="sidebar-inset"]::-webkit-scrollbar-thumb {
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: rgb(0 0 0 / 0.18);
+}
+[data-slot="sidebar-inset"]::-webkit-scrollbar-thumb:hover { background-color: rgb(0 0 0 / 0.30); }
+
+/* Firefox (sem ::-webkit-scrollbar): scrollbar-width fino + cor por contexto. */
+[data-slot="sidebar-content"] { scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / 0.22) transparent; }
+[data-slot="sidebar-inset"] { scrollbar-width: thin; scrollbar-color: rgb(0 0 0 / 0.22) transparent; }
+
+/* scrollbar-gutter no INSET (container que rola): reserva o espaço da scrollbar
+ * SEMPRE — com e sem overflow — para o conteúdo não "dançar" na horizontal ao
+ * alternar entre meses com scroll (fev/jan/dez) e sem scroll (mar). Fica aqui, e
+ * não no html, porque é o inset que rola; a janela está travada em
+ * overflow-hidden, então o gutter é reservado dentro do frame (sem faixa branca). */
+[data-slot="sidebar-inset"] { scrollbar-gutter: stable; }
+
+/* Coreografia do collapse/expand da sidebar (fade dos labels). */
+[data-state="collapsed"] [data-slot="sidebar-gap"],
+[data-state="collapsed"] [data-slot="sidebar-container"] { transition-delay: 100ms; }
+[data-state="expanded"] [data-slot="sidebar-gap"],
+[data-state="expanded"] [data-slot="sidebar-container"] { transition-delay: 0ms; }
+[data-state="collapsed"] [data-slot="sidebar-group-label"] { transition-delay: 0ms; transition-duration: 100ms; }
+[data-state="expanded"] [data-slot="sidebar-group-label"] { transition-delay: 100ms; transition-duration: 150ms; }
+[data-slot="sidebar-menu-button"] > span:last-child { transition: opacity 100ms ease-out; }
+[data-state="collapsed"] [data-slot="sidebar-menu-button"] > span:last-child { opacity: 0; transition-delay: 0ms; }
+[data-state="expanded"] [data-slot="sidebar-menu-button"] > span:last-child { opacity: 1; transition-delay: 120ms; transition-duration: 150ms; }
+
+/* Animações do UpdateCard. */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes border-rotate { to { --border-angle: 360deg; } }
+@keyframes collapsible-down { from { height: 0; opacity: 0; } to { height: var(--radix-collapsible-content-height); opacity: 1; } }
+@keyframes collapsible-up { from { height: var(--radix-collapsible-content-height); opacity: 1; } to { height: 0; opacity: 0; } }
+@keyframes pulse-subtle { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }

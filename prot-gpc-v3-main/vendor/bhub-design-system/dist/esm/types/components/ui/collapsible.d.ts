@@ -1,0 +1,5 @@
+import { Collapsible as CollapsiblePrimitive } from "radix-ui";
+declare function Collapsible({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.Root>): import("react/jsx-runtime").JSX.Element;
+declare function CollapsibleTrigger({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleTrigger>): import("react/jsx-runtime").JSX.Element;
+declare function CollapsibleContent({ className, ...props }: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>): import("react/jsx-runtime").JSX.Element;
+export { Collapsible, CollapsibleTrigger, CollapsibleContent };

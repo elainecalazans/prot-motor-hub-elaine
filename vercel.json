@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/hub", "destination": "/hub-index.html" },
-    { "source": "/((?!hub$).*)", "destination": "/index.html" }
-  ]
-}

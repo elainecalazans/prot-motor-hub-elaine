@@ -1,6 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/hub", "destination": "/hub-index.html" },
-    { "source": "/((?!hub$).*)", "destination": "/index.html" }
+  "routes": [
+    { "src": "/hub", "dest": "/hub-index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

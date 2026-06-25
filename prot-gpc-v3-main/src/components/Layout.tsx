@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   AppSidebar,
   NotificationBell,
@@ -14,6 +14,8 @@ import {
 } from '@/components/gpc-sidebar-config';
 import { DataHoraHeader } from '@/components/gpc/DataHoraHeader';
 import { notificacoesMotor } from '@/mocks/notificacoes-motor';
+import { FlowBanner } from '@/components/FlowBanner';
+import { FLOW_META } from '@/lib/flow-meta';
 
 /** Título da topbar por rota. */
 function headerTitle(pathname: string): string {
@@ -27,7 +29,14 @@ export function Layout() {
   const [notifications, setNotifications] = useState(notificacoesMotor);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const navGroups = useMemo(() => buildGpcNavGroups(pathname), [pathname]);
+
+  // Lê o parâmetro ?flow= para exibir o banner contextual do hub-index.
+  const flowMeta = useMemo(() => {
+    const key = searchParams.get('flow');
+    return key ? (FLOW_META[key] ?? null) : null;
+  }, [searchParams]);
 
   // O AppSidebar do DS renderiza cada item como <button> e NÃO faz navegação
   // própria (não expõe href de link nem callback onNavigate). Delegamos o clique
@@ -91,6 +100,7 @@ export function Layout() {
           </div>
         </header>
         <main className="flex-1 px-12 pt-14 pb-12">
+          {flowMeta && <FlowBanner meta={flowMeta} />}
           <Outlet />
         </main>
       </SidebarInset>
